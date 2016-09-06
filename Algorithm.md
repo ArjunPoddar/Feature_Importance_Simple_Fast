@@ -95,8 +95,8 @@ Then run linear regression of y on x:
     ##    user  system elapsed 
     ##   1.560   0.048   1.605
 
-The p-value from the linear regression model is **0.06696** and the
-elapsed time is **1.615 seconds**.  
+The p-value from the linear regression model is **0.02813** and the
+elapsed time is **1.605 seconds**.  
 
 Now, to compare, we run a correlation test on y and x:
 
@@ -121,8 +121,8 @@ Now, to compare, we run a correlation test on y and x:
     ##    user  system elapsed 
     ##   0.056   0.000   0.054
 
-The p-value from the correlation test is \*\* \*\* and the elapsed time
-is \*\* seconds\*\*.
+The p-value from the correlation test is \*\*0.02813\*\* and the elapsed time
+is \*\*0.054 seconds\*\*.
 
 **We can see that though the p-values are same, the correlation test has
 a much shorter execution time than the linear regression model (even for
