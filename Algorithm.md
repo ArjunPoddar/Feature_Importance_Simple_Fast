@@ -50,10 +50,22 @@ feature as shown in the table below.
 
 When the response is quantitative(numeric, continuous) a regression
 model is appropriate. If the feature is also quantitative, a simple
-linear regression is sufficient
+linear regression is sufficient. But we will use a [correlation
+test](https://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient#Testing_using_Student.27s_t-distribution)
+instead. **Correlation test gives the same p-value as the linear
+regression, on top of that it is faster**. Let us show this with an
+example.
+
+ 
+
+Let's generate two random variables:
 
     y <- runif(1000000, -4, 5)
     x <- rnorm(1000000, 65, 9)
+
+ 
+
+Then run linear regression of y on x:
 
     ptm <- proc.time()
     # summary(lm(Sepal.Length ~ Petal.Length, data = iris))
@@ -65,23 +77,30 @@ linear regression is sufficient
     ## 
     ## Residuals:
     ##     Min      1Q  Median      3Q     Max 
-    ## -4.5018 -2.2471 -0.0031  2.2508  4.5018 
+    ## -4.5119 -2.2489  0.0027  2.2476  4.5030 
     ## 
     ## Coefficients:
     ##              Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept) 0.4931267  0.0189476  26.026   <2e-16 ***
-    ## x           0.0001107  0.0002888   0.384    0.701    
+    ## (Intercept) 0.4847028  0.0189437  25.586   <2e-16 ***
+    ## x           0.0003103  0.0002887   1.075    0.282    
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
-    ## Residual standard error: 2.598 on 999998 degrees of freedom
-    ## Multiple R-squared:  1.471e-07,  Adjusted R-squared:  -8.529e-07 
-    ## F-statistic: 0.1471 on 1 and 999998 DF,  p-value: 0.7013
+    ## Residual standard error: 2.597 on 999998 degrees of freedom
+    ## Multiple R-squared:  1.156e-06,  Adjusted R-squared:  1.556e-07 
+    ## F-statistic: 1.156 on 1 and 999998 DF,  p-value: 0.2824
 
     proc.time() - ptm
 
     ##    user  system elapsed 
-    ##   1.580   0.044   1.620
+    ##   1.588   0.028   1.614
+
+The p-value from the linear regression model is **0.06696** and the
+elapsed time is **1.615 seconds**.
+
+ 
+
+Now, to compare, we run a correlation test on y and x:
 
     ptm <- proc.time()
     # cor.test(iris$Sepal.Length, iris$Petal.Length)
@@ -91,17 +110,29 @@ linear regression is sufficient
     ##  Pearson's product-moment correlation
     ## 
     ## data:  y and x
-    ## t = 0.3835, df = 1e+06, p-value = 0.7013
+    ## t = 1.075, df = 1e+06, p-value = 0.2824
     ## alternative hypothesis: true correlation is not equal to 0
     ## 95 percent confidence interval:
-    ##  -0.001576465  0.002343463
+    ##  -0.0008849837  0.0030349406
     ## sample estimates:
-    ##          cor 
-    ## 0.0003835008
+    ##         cor 
+    ## 0.001074983
 
     proc.time() - ptm
 
     ##    user  system elapsed 
-    ##   0.056   0.000   0.055
+    ##   0.052   0.000   0.055
 
-[Correlation](https://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient#Testing_using_Student.27s_t-distribution)
+The p-value from the correlation test is \*\* \*\* and the elapsed time
+is \*\* seconds\*\*.
+
+We can see that though the p-values are same, the correlation test has a
+much shorter execution time than the linear regression model (even for
+just a million observations). When there are too many features and many
+more observations, this difference can be really high. Thus using the
+correlation test gives us the same inference in a much shorter execution
+time.
+
+\*Note: This illustration is based on randomly generated data. The
+p-values and the execution times would be different each time we run
+them- trust me, I almost forgot about it.
