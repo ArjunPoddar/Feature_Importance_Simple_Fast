@@ -12,7 +12,9 @@ importances at the end of fitting the model. This can be very
 time-consuming depending on the size of the data and the
 repetition(bagging, boosting etc.) as the whole set of features are
 generally used in the model. Here, we take a very simple one-by-one
-feature approach.
+feature approach. For each feature, we test its relation to the
+response. The test is decided based on the type of the response and the
+feature as shown in the table below.
 
 <table>
 <thead>
