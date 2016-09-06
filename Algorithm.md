@@ -1,7 +1,12 @@
+In predictive modeling (regression or classification) the goal is to
+find the effect that any feature has on the response variable. This
+effect is known as the **feature importance**.
+
 <table>
 <thead>
 <tr class="header">
-<th align="left">Response Feature</th>
+<th align="left">Response</th>
+<th align="left">Feature</th>
 <th align="left">Test</th>
 </tr>
 </thead>
