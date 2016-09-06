@@ -2,6 +2,18 @@ In predictive modeling (regression or classification) the goal is to
 find the effect that any feature has on the response variable. This
 effect is known as the **feature importance**.
 
+We consider the cases when the response and the features are either
+quantitative or qualitative. For the purpose of this project, to keep it
+simple, we do not consider variables that are of other types- such as
+datetime.
+
+In general, when fitting a predictive model we get the feature
+importances at the end of fitting the model. This can be very
+time-consuming depending on the size of the data and the
+repetition(bagging, boosting etc.) as the whole set of features are
+generally used in the model. Here, we take a very simple one-by-one
+feature approach.
+
 <table>
 <thead>
 <tr class="header">
